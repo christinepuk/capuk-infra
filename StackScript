@@ -15,9 +15,9 @@ trap "cleanup $? $LINENO" EXIT
 #<UDF name="soa_email_address" label="email DNS record SOA" default="">
 
 # git repo
-export GIT_REPO="https://github.com/akamai-compute-marketplace/marketplace-apps.git"
-export WORK_DIR="/tmp/marketplace-apps" 
-export MARKETPLACE_APP="apps/linode-marketplace-nextcloud"
+export GIT_REPO="git@github.com:christinepuk/capuk-infra.git"
+export WORK_DIR="/root/" 
+export MARKETPLACE_APP="marketplace-apps/apps/linode-marketplace-nextcloud"
 
 # enable logging
 exec > >(tee /dev/ttyS0 /var/log/stackscript.log) 2>&1
