@@ -1,4 +1,0 @@
-[submodule "marketplace-apps"]
-	path = marketplace-apps
-	url = https://github.com/christinepuk/marketplace-apps/
-        branch = main
