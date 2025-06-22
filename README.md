@@ -1,4 +1,4 @@
-# capuk-infra
+# capuk-cloud-infra
 Personal Infrastructure Repo
 ### Pre-steps
 1. Backup cal/todo items manually
@@ -32,5 +32,13 @@ linode-cli linodes create \
 ```
 
 #### TODO
-- set all UDFs to a common file and ansible encrypt it [here](https://github.com/christinepuk/capuk-infra/blob/main/nextcloud/group_vars/linode/secret_vars.yml)
-
+[ ] Automate presteps
+[ ] Test out this ansible setup
+[ ] How to backup cal/todo items dynamically?
+[ ] Set all UDFs to a common file and ansible encrypt it [here](https://github.com/christinepuk/capuk-infra/blob/main/nextcloud/group_vars/linode/secret_vars.yml)
+[ ] Backup BS volume, encrypt and ship to s3 via borg (have tests for accessing)
+[ ] Push cv to a docker container on this server (or dedicated bucket) -- adjust DNS
+[ ] Add N number wordpress sites in [docker](https://www.docker.com/blog/how-to-dockerize-wordpress/)
+[ ] Migrate wordpress sites to here
+[ ] Add Wallabag to here
+[ ] Add Plex to here

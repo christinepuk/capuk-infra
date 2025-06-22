@@ -17,7 +17,7 @@ trap "cleanup $? $LINENO" EXIT
 #<UDF name="soa_email_address" label="email DNS record SOA" default="accounts@christinepuk.net">
 
 # git repo
-export GIT_REPO="git@github.com:christinepuk/capuk-infra.git"
+export GIT_REPO="git@github.com:christinepuk/capuk-cloud-infra.git"
 export WORK_DIR="/root/" 
 export MARKETPLACE_APP="nextcloud"
 
