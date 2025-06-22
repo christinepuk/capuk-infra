@@ -1,0 +1,6 @@
+[submodule "nextcloud/marketplace-apps"]
+	path = nextcloud/marketplace-apps
+	url = https://github.com/christinepuk/marketplace-apps/
+[submodule "marketplace-apps"]
+	path = marketplace-apps
+	url = https://github.com/christinepuk/marketplace-apps/
