@@ -13,3 +13,66 @@
       content: |
         Sudo Username: {{ username }}
         Sudo Password: {{ password }}
+
+- name: Create mount directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+  loop:
+    - /mnt/ncmedia
+    - /mnt/capuk-media
+
+- name: Append fstab entries
+  blockinfile:
+    path: /etc/fstab
+    block: |
+      UUID=180b0135-0219-4c94-7a06-3087c4388cdf  /     ext4  errors=remount-ro  0  1
+      UUID=f1408ea6-59a0-11ed-bc9d-525400000001  none  swap  sw                 0  0
+      /dev/disk/by-id/scsi-0Linode_Volume_ncmedia /mnt/ncmedia ext4 defaults,noatime,nofail 0 2
+
+- name: Mount all filesystems
+  command: mount -a
+
+- name: Install backup 
+  apt:
+    name:
+      - borgbackup
+    state: present
+    update_cache: yes
+
+- name: Tune Nextcloud calendar config
+  shell: >
+    docker exec --user www-data nextcloud-aio-nextcloud
+    php occ config:app:set dav {{ item.key }} --type=integer --value={{ item.value }}
+  loop:
+    - { key: rateLimitCalendarCreation, value: 1000 }
+    - { key: rateLimitPeriodCalendarCreation, value: 180000 }
+    - { key: maximumCalendarsSubscriptions, value: 5000 }
+
+- name: Enable files_external and configure local mount
+  shell: |
+    docker exec --user www-data nextcloud-aio-nextcloud php occ app:enable files_external
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:create ncmedia local null::null
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:config ncmedia path /mnt/ncmedia
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:applicable ncmedia user admin
+
+- name: Configure S3 mount in Nextcloud
+  shell: |
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:create capuk-media amazons3 accesskey::accesskey
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:config capuk-media bucket capuk-media
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:config capuk-media hostname us-iad-1.linodeobjects.com
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:config capuk-media port 443
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:config capuk-media use_ssl true
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:config capuk-media region us-east-1
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:config capuk-media key {{ s3_access_key }}
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:config capuk-media secret {{ s3_secret_key }}
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files_external:applicable capuk-media user capuk
+    docker exec --user www-data nextcloud-aio-nextcloud php occ config:app:set files_external allow_user_mounting --value="yes"
+    docker exec --user www-data nextcloud-aio-nextcloud php occ files:cleanup
+
+- name: Repair Nextcloud
+  command: docker exec --user www-data nextcloud-aio-nextcloud php occ maintenance:repair --include-expensive
+

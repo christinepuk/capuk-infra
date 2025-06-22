@@ -8,16 +8,18 @@ trap "cleanup $? $LINENO" EXIT
 
 ## Domain Settings
 #<UDF name="token_password" label="Your Linode API token. This is needed to create your server's DNS records" default="">
-#<UDF name="subdomain" label="Subdomain" example="The subdomain for the DNS record: www (Requires Domain)" default="">
-#<UDF name="domain" label="Domain" example="The domain for the DNS record: example.com (Requires API token)" default="">
+#<UDF name="subdomain" label="Subdomain" example="The subdomain for the DNS record: www (Requires Domain)" default="nextcloud">
+#<UDF name="domain" label="Domain" example="The domain for the DNS record: example.com (Requires API token)" default="christinepuk.net">
+#<UDF name="s3_access_key" label="S3 Access for Bucket" example="s3 access token" default="">
+#<UDF name="s3_secret_key" label="S3 Secret for Bucket" example="s3 secret token" default="">
 
 ## harbor Settings 
-#<UDF name="soa_email_address" label="email DNS record SOA" default="">
+#<UDF name="soa_email_address" label="email DNS record SOA" default="accounts@christinepuk.net">
 
 # git repo
 export GIT_REPO="git@github.com:christinepuk/capuk-infra.git"
 export WORK_DIR="/root/" 
-export MARKETPLACE_APP="marketplace-apps/apps/linode-marketplace-nextcloud"
+export MARKETPLACE_APP="nextcloud"
 
 # enable logging
 exec > >(tee /dev/ttyS0 /var/log/stackscript.log) 2>&1
