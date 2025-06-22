@@ -37,6 +37,7 @@ linode-cli linodes create \
 - [ ] How to backup cal/todo items dynamically?
 - [ ] Set all UDFs to a common file and ansible encrypt it [here](https://github.com/christinepuk/capuk-infra/blob/main/nextcloud/group_vars/linode/secret_vars.yml)
 - [ ] Backup BS volume, encrypt and ship to s3 via borg (have tests for accessing)
+- [ ] Add proxy container to handle traffic for all other port besides 8443, 443, 80, 3478m 40169
 - [ ] Push cv to a docker container on this server (or dedicated bucket) -- adjust DNS
 - [ ] Add N number wordpress sites in [docker](https://www.docker.com/blog/how-to-dockerize-wordpress/)
 - [ ] Migrate wordpress sites to here
