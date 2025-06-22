@@ -41,5 +41,3 @@ linode-cli linodes create \
 - [ ] Push cv to a docker container on this server (or dedicated bucket) -- adjust DNS
 - [ ] Add N number wordpress sites in [docker](https://www.docker.com/blog/how-to-dockerize-wordpress/)
 - [ ] Migrate wordpress sites to here
-- [ ] Add Wallabag to here
-- [ ] Add Plex to here
